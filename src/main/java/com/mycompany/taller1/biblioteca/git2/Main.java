@@ -47,6 +47,19 @@ public class Main {
         }
     }
     
+    public static Client searchClient(String id){
+        
+        for (Client client : clients) {
+            if(id.equals(client.getId())){
+                return client;
+            }else{
+                return null;
+            }
+            
+        }
+        
+    }
+    
     public static void main(String[] args) {
         createClient();
         readClient();
