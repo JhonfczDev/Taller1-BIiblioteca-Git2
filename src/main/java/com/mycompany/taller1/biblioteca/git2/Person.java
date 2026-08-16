@@ -29,16 +29,19 @@ public abstract class Person {
         return phoneNumber;
     }
 
-    public void setId(String id) {
+    public Person setId(String id) {
         this.id = id;
+        return this;
     }
 
-    public void setName(String nombre) {
+    public Person setName(String nombre) {
         this.name = nombre;
+        return this;
     }
 
-    public void setPhoneNumber(String telefono) {
+    public Person setPhoneNumber(String telefono) {
         this.phoneNumber = telefono;
+        return this;
     }
     
     

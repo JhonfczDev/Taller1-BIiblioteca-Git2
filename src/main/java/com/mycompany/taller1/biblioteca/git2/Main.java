@@ -52,17 +52,51 @@ public class Main {
         for (Client client : clients) {
             if(id.equals(client.getId())){
                 return client;
-            }else{
-                return null;
             }
+            }
+        
+        return null;
+        }
+    
+    public static void updateClient(){
+        
+        String id;
+        
+        System.out.print("\n\n__________MODIFICAR CLIENTE__________\n -Ingrese a continuacion el id del cliente a modificar: " ); id = sc.nextLine();
+        
+        Client client = searchClient(id);
+        
+        if(client != null){
+            
+            String newId, name, phone, email;
+            
+            System.out.println("\n-Cliente registrado a continuacion ingrese los datos: ");
+            
+            System.out.print("-ID: "); newId = sc.nextLine();
+            System.out.print("-NOMBRE: "); name = sc.nextLine();
+            System.out.print("-TELEFONO: "); phone = sc.nextLine();
+            System.out.print("-EMAIL: "); email = sc.nextLine();
+        
+            client.setEmail(email)
+                    .setId(newId)
+                    .setName(name)
+                    .setPhoneNumber(phone);
+        
+            System.out.println("\nMENSAJE: Cliente modificado exitosamente");
+        }else{
+            
+            System.out.println("\nMENSAJE: El cliente ingresado no se encuentra registrado");
             
         }
         
     }
+        
+    
     
     public static void main(String[] args) {
         createClient();
         readClient();
+        updateClient();
                 
         
     }

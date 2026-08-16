@@ -16,8 +16,9 @@ public class Client extends Person{
         return email;
     }
 
-    public void setEmail(String email) {
+    public Client setEmail(String email) {
         this.email = email;
+        return this;
     }
     
     
