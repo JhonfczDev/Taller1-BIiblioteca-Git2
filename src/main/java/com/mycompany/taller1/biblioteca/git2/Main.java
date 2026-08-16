@@ -15,7 +15,7 @@ public class Main {
         String phone;
         String email;
         
-        System.out.println("__________AGREGAR CLIENTE__________\n -Ingrese a continuacion los datos del cliente a agregar: \n" );
+        System.out.println("\n__________AGREGAR CLIENTE__________\n -Ingrese a continuacion los datos del cliente a agregar: \n" );
         
         System.out.print("-ID: "); id = sc.nextLine();
         System.out.print("-NOMBRE: "); name = sc.nextLine();
@@ -29,8 +29,27 @@ public class Main {
         System.out.println("\nMENSAJE: Cliente agregado exitosamente");
     }
     
+    public static void readClient(){
+        
+        int ind = 1;
+        
+        System.out.println("\n__________LISTAR CLIENTES__________\n -A continuacion se listan los clientes registrados: " );
+        
+        for (Client client : clients) {
+            System.out.println("\nCliente "+ind+":\n");
+            System.out.println("-ID: "+client.getId()); 
+            System.out.println("-NOMBRE: "+client.getName()); 
+            System.out.println("-TELEFONO: "+client.getPhoneNumber()); 
+            System.out.print("-EMAIL: "+client.getEmail()); 
+            
+            
+            
+        }
+    }
+    
     public static void main(String[] args) {
         createClient();
+        readClient();
                 
         
     }
