@@ -143,8 +143,23 @@ public class Main {
         System.out.println("\nMENSAJE: Libro agregado exitosamente");
     }
     
+    public static Book searchBook(String cod){
+
+     for (Book book : books) {
+         if(cod.equals(book.getCode())){
+             return book;
+         }
+         }
+
+     return null;
+     }
+
+    
+    
+    
     public static void main(String[] args) {
         createBook();
+        
                 
         
     }
