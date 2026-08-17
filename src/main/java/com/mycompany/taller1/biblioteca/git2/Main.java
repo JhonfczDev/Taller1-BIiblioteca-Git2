@@ -15,7 +15,7 @@ public class Main {
         String phone;
         String email;
         
-        System.out.println("\n__________AGREGAR CLIENTE__________\n -Ingrese a continuacion los datos del cliente a agregar: \n" );
+        System.out.println("\n__________AGREGAR CLIENTES__________\n -Ingrese a continuacion los datos del cliente a agregar: \n" );
         
         System.out.print("-ID: "); id = sc.nextLine();
         System.out.print("-NOMBRE: "); name = sc.nextLine();
@@ -90,13 +90,43 @@ public class Main {
         }
         
     }
-        
     
+    public static void deleteClient(){
+        
+        String id;
+        
+        System.out.print("\n\n__________ELIMINAR CLIENTES__________\n -Ingrese a continuacion el id del cliente a eliminar: " ); id = sc.nextLine();
+        
+        Client client = searchClient(id);
+        
+        if(client != null){
+            
+            String opt;
+            System.out.println("\n-MENSAJE: Cliente registrado, esta seguro que desea confirmar la operacion?: ");
+            
+            System.out.println("1. Si ");
+            System.out.println("2. No"); 
+            System.out.print("*"); opt = sc.nextLine();
+        
+            if(opt.equals("1")){
+                clients.remove(client);
+                System.out.println("\nMENSAJE: Cliente eliminado con exito");
+            }else if(opt.equals("2")){
+                System.out.println("\nMENSAJE: Operacion cancelada");
+            }else{
+                System.out.println("\nMENSAJE: Se ingreso una opcion invalida");
+            }
+        }else{
+            System.out.println("\nMENSAJE: El cliente ingresado no se encuentra registrado");
+        }
+    }
     
     public static void main(String[] args) {
         createClient();
         readClient();
         updateClient();
+        deleteClient();
+        readClient();
                 
         
     }
