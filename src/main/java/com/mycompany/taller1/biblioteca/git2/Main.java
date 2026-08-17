@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class Main {
     
     static ArrayList<Client> clients = new ArrayList<>();
+    static ArrayList<Book> books = new ArrayList<>();
     static Scanner sc = new Scanner(System.in);
     
     public static void createClient(){
@@ -121,12 +122,29 @@ public class Main {
         }
     }
     
+    public static void createBook(){
+        
+        String cod, titl, year, auth;
+        
+        boolean avail;
+        
+        System.out.println("\n__________AGREGAR LIBROS__________\n -Ingrese a continuacion los datos del libro a agregar: \n" );
+        
+        System.out.print("-Codigo: "); cod = sc.nextLine();
+        System.out.print("-Titulo: "); titl = sc.nextLine();
+        System.out.print("-Ano de publicacion: "); year = sc.nextLine();
+        System.out.print("-Autor: "); auth = sc.nextLine();
+        System.out.print("-Disponible: "); avail = sc.nextBoolean();
+        
+        Book book = new Book(cod, titl, year, auth, avail);
+        
+        books.add(book);
+        
+        System.out.println("\nMENSAJE: Libro agregado exitosamente");
+    }
+    
     public static void main(String[] args) {
-        createClient();
-        readClient();
-        updateClient();
-        deleteClient();
-        readClient();
+        createBook();
                 
         
     }
