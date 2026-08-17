@@ -26,16 +26,22 @@ public abstract class Material {
         return publicationYear;
     }
 
-    public void setCode(String code) {
+    public Material setCode(String code) {
         this.code = code;
+        
+        return this;
     }
 
-    public void setTitle(String title) {
+    public Material setTitle(String title) {
         this.title = title;
+        
+        return this;
     }
 
-    public void setPublicationYear(String publicationYear) {
+    public Material setPublicationYear(String publicationYear) {
         this.publicationYear = publicationYear;
+        
+        return this;
     }
     
     

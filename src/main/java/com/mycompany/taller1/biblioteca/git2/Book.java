@@ -18,6 +18,28 @@ public class Book extends Material{
         this.author = author;
         this.available = available;
     }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public boolean isAvailable() {
+        return available;
+        
+    }
+
+    public Book setAuthor(String author) {
+        this.author = author;
+        
+        return this;
+    }
+
+    public Book setAvailable(boolean available) {
+        this.available = available;
+        
+        return this;
+    }
+    
     
     
     

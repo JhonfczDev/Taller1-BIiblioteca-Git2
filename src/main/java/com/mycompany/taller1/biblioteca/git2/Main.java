@@ -125,8 +125,9 @@ public class Main {
     public static void createBook(){
         
         String cod, titl, year, auth;
-        
         boolean avail;
+        
+       
         
         System.out.println("\n__________AGREGAR LIBROS__________\n -Ingrese a continuacion los datos del libro a agregar: \n" );
         
@@ -134,7 +135,9 @@ public class Main {
         System.out.print("-Titulo: "); titl = sc.nextLine();
         System.out.print("-Ano de publicacion: "); year = sc.nextLine();
         System.out.print("-Autor: "); auth = sc.nextLine();
-        System.out.print("-Disponible: "); avail = sc.nextBoolean();
+        System.out.print("-Disponible: "); avail = Boolean.parseBoolean(sc.nextLine());
+        
+        
         
         Book book = new Book(cod, titl, year, auth, avail);
         
@@ -153,12 +156,52 @@ public class Main {
 
      return null;
      }
+    
+    public static void updateBook(){
+        
+         String cod;
+        
+        System.out.print("\n\n__________MODIFICAR LIBRO__________\n -Ingrese a continuacion el codigo del libro a modificar: " ); cod = sc.nextLine();
+        
+        Book book = searchBook(cod);
+        
+                if(book != null){
 
+                    String code, titl, year, auth;
+                    boolean avail;
+
+                    System.out.println("\n-Cliente registrado a continuacion ingrese los datos: ");
+
+                    System.out.print("-Codigo: "); code = sc.nextLine();
+                    System.out.print("-Titulo: "); titl = sc.nextLine();
+                    System.out.print("-Ano de publicacion: "); year = sc.nextLine();
+                    System.out.print("-Autor: "); auth = sc.nextLine();
+                    System.out.print("-Disponible: "); avail = sc.nextBoolean();
+
+                    book.setAuthor(auth)
+                            .setAvailable(avail)
+                            .setCode(cod)
+                            .setCode(cod)
+                            .setTitle(titl)
+                            .setPublicationYear(year);
+                    
+                    System.out.println("\nMENSAJE: Libro modificado exitosamente");
+                }else{
+            
+            System.out.println("\nMENSAJE: El libro ingresado no se encuentra registrado");
+        }
+        
+    }
+    
+    
+    
+   
     
     
     
     public static void main(String[] args) {
         createBook();
+        updateBook();
         
                 
         
