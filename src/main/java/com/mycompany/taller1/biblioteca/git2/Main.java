@@ -157,6 +157,27 @@ public class Main {
      return null;
      }
     
+    public static void readBook(){
+        
+        int ind = 1;
+        
+        System.out.println("\n__________LISTAR LIBOROS__________\n -A continuacion se listan los clientes registrados: " );
+        
+        for (Book book : books) {
+            System.out.println("\nLibro "+ind+":\n");
+            System.out.println("-CODIGO: "+book.getCode()); 
+            System.out.println("-TITULO: "+book.getTitle()); 
+            System.out.println("-ANO DE PUBLICACION: "+book.getPublicationYear()); 
+            System.out.print("-AUTOR: "+book.getAuthor()); 
+            System.out.print("-DISPONIBLE: "+book.isAvailable()); 
+            
+            
+            
+        }
+    }
+        
+    }
+    
     public static void updateBook(){
         
          String cod;
