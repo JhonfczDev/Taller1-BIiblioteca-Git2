@@ -32,20 +32,25 @@ public class Main {
     
     public static void readClient(){
         
-        int ind = 1;
         
-        System.out.println("\n__________LISTAR CLIENTES__________\n -A continuacion se listan los clientes registrados: " );
-        
-        for (Client client : clients) {
-            System.out.println("\nCliente "+ind+":\n");
-            System.out.println("-ID: "+client.getId()); 
-            System.out.println("-NOMBRE: "+client.getName()); 
-            System.out.println("-TELEFONO: "+client.getPhoneNumber()); 
-            System.out.print("-EMAIL: "+client.getEmail()); 
-            
-            
-            
+        if (!clients.isEmpty()) {
+            int ind = 1;
+            System.out.println("\n__________LISTAR CLIENTES__________\n -A continuacion se listan los clientes registrados: ");
+
+            for (Client client : clients) {
+                System.out.println("\nCliente " + ind + ":\n");
+                System.out.println("-ID: " + client.getId());
+                System.out.println("-NOMBRE: " + client.getName());
+                System.out.println("-TELEFONO: " + client.getPhoneNumber());
+                System.out.print("-EMAIL: " + client.getEmail());
+
+            }
+
+        }else{
+            System.out.println("\n__________LISTAR CLIENTES__________\n -MENSAJE: No hay clientes registrados");
         }
+        
+        
     }
     
     public static Client searchClient(String id){
@@ -146,6 +151,28 @@ public class Main {
         System.out.println("\nMENSAJE: Libro agregado exitosamente");
     }
     
+    public static void readBook(){
+        
+        int ind = 1;
+        
+           if (!books.isEmpty()) {
+            System.out.println("\n__________LISTAR LIBROS__________\n -A continuacion se listan los libros registrados: ");
+
+            for (Book book : books) {
+                System.out.println("\nLibro " + ind + ":\n");
+                System.out.println("-CODIGO: " + book.getCode());
+                System.out.println("-TITULO: " + book.getTitle());
+                System.out.println("-ANO DE PUBLICACION: " + book.getPublicationYear());
+                System.out.println("-AUTOR: " + book.getAuthor());
+                System.out.print("-DISPONIBLE: " + book.isAvailable());
+            }
+        }else{
+               System.out.println("\n__________LISTAR LIBROS__________\n -MENSAJE: No hay libros registrados");
+    }
+            
+            
+        }
+    
     public static Book searchBook(String cod){
 
      for (Book book : books) {
@@ -156,27 +183,6 @@ public class Main {
 
      return null;
      }
-    
-    public static void readBook(){
-        
-        int ind = 1;
-        
-        System.out.println("\n__________LISTAR LIBOROS__________\n -A continuacion se listan los clientes registrados: " );
-        
-        for (Book book : books) {
-            System.out.println("\nLibro "+ind+":\n");
-            System.out.println("-CODIGO: "+book.getCode()); 
-            System.out.println("-TITULO: "+book.getTitle()); 
-            System.out.println("-ANO DE PUBLICACION: "+book.getPublicationYear()); 
-            System.out.print("-AUTOR: "+book.getAuthor()); 
-            System.out.print("-DISPONIBLE: "+book.isAvailable()); 
-            
-            
-            
-        }
-    }
-        
-    }
     
     public static void updateBook(){
         
@@ -191,7 +197,7 @@ public class Main {
                     String code, titl, year, auth;
                     boolean avail;
 
-                    System.out.println("\n-Cliente registrado a continuacion ingrese los datos: ");
+                    System.out.println("\n-Libro registrado a continuacion ingrese los datos: ");
 
                     System.out.print("-Codigo: "); code = sc.nextLine();
                     System.out.print("-Titulo: "); titl = sc.nextLine();
@@ -214,6 +220,38 @@ public class Main {
         
     }
     
+    public static void deleteBook(){
+        
+         String cod;
+        
+        System.out.print("\n\n__________ELIMINAR LIBRO__________\n -Ingrese a continuacion el codigo del libro a eliminar: " ); sc.nextLine(); 
+        cod = sc.nextLine();
+        
+        Book book = searchBook(cod);
+        
+                if(book != null){
+                    String option;
+
+                    System.out.println("\n-Libro registrado, esta seguro que quiere continuar con la operacion?: ");
+                    System.out.println("1-Si");
+                    System.out.println("2-No");
+                    System.out.println("*"); option = sc.nextLine();
+                    
+                    switch(option){
+                        case "1":
+                            books.remove(book);
+                            System.out.println("\nMENSAJE: Libro eliminado exitosamente");
+                            break;
+                        case "2":
+                            System.out.println("\nMENSAJE: Operacion cancelada");
+                        default:
+                            System.out.println("\n MENSAEJE: Se ingreso una opcion invalida");
+                    }
+                }else{
+            System.out.println("\nMENSAJE: El libro ingresado no se encuentra registrado");
+        }
+    }
+    
     
     
    
@@ -223,6 +261,9 @@ public class Main {
     public static void main(String[] args) {
         createBook();
         updateBook();
+        readBook();
+        deleteBook();
+        readBook();
         
                 
         
