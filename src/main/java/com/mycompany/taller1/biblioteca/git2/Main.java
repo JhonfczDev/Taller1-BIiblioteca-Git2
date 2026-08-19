@@ -329,6 +329,33 @@ public class Main {
     return null;
 }
     
+    public static void updateLoan(String targetLoanId) {
+    boolean found = false;
+
+    if (!loans.isEmpty()) {
+        for (Loan loan : loans) {
+            if (loan.getLoanId().equalsIgnoreCase(targetLoanId)) {
+                System.out.println("\n__________BUSCAR PRESTAMO__________\n -A continuacion se detallan los datos del prestamo: ");
+                
+                System.out.println("\n-ID PRESTAMO: " + loan.getLoanId());
+                System.out.println("-CLIENTE: " + loan.getClient().getName()); 
+                System.out.println("-LIBRO: " + loan.getBook().getTitle());    
+                System.out.println("-FECHA: " + loan.getDate());
+                System.out.println("-ESTADO: " + loan.getClient());
+                
+                found = true;
+                break; 
+            }
+        }
+
+        if (!found) {
+            System.out.println("\n__________BUSCAR PRESTAMO__________\n -MENSAJE: No se encontro ningun prestamo con el ID: " + targetLoanId);
+        }
+
+    } else {
+        System.out.println("\n__________BUSCAR PRESTAMO__________\n -MENSAJE: No hay prestamos registrados en el sistema");
+    }
+}
     
     
     
