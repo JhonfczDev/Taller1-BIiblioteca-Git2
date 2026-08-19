@@ -142,9 +142,8 @@ public class Main {
         System.out.print("-Titulo: "); titl = sc.nextLine();
         System.out.print("-Ano de publicacion: "); year = sc.nextLine();
         System.out.print("-Autor: "); auth = sc.nextLine();
-        System.out.print("-Disponible: "); avail = Boolean.parseBoolean(sc.nextLine());
         
-        
+        avail = true;
         
         Book book = new Book(cod, titl, year, auth, avail);
         
@@ -237,7 +236,7 @@ public class Main {
                     System.out.println("\n-Libro registrado, esta seguro que quiere continuar con la operacion?: ");
                     System.out.println("1-Si");
                     System.out.println("2-No");
-                    System.out.println("*"); option = sc.nextLine();
+                    System.out.print("*"); option = sc.nextLine();
                     
                     switch(option){
                         case "1":
@@ -287,10 +286,12 @@ public class Main {
             System.out.println("\nMENSAJE: No se encuentra registrado el cliente ingresado");
         }else if(existsBook == false){
             System.out.println("\nMENSAJE: El libro ingresado no se encuentra registrado");
+        }else if(book.isAvailable() == false){
+            System.out.println("\nMENSAJE: El libro ingresado no se encuentra disponible");
         }else{
             String status = "PRESTADO";
             LocalDate realDate = LocalDate.parse(date);
-            
+            book.setAvailable(false);
             Loan loan = new Loan(loanId, client, book, realDate, status);
             loans.add(loan);
             
@@ -298,16 +299,36 @@ public class Main {
         }
     }
     
-   
+    public static void readLoan() {
+    if (!loans.isEmpty()) {
+        int ind = 1;
+        System.out.println("\n__________LISTAR PRESTAMOS__________\n -A continuacion se listan los prestamos registrados: ");
+
+        for (Loan loan : loans) {
+            System.out.println("\nPrestamo " + ind + ":\n");
+            System.out.println("-ID PRESTAMO: " + loan.getLoanId());
+            System.out.println("-CLIENTE: " + loan.getClient().getName() + " (ID: " + loan.getClient().getId() + ")");
+            System.out.println("-LIBRO: " + loan.getBook().getTitle() + " (COD: " + loan.getBook().getCode() + ")");
+            System.out.println("-FECHA: " + loan.getDate());
+            System.out.println("-ESTADO: " + loan.getStado()); // Ajusta a .getStatus() si cambiaste el nombre en la clase
+            
+            ind++;
+        }
+
+    } else {
+        System.out.println("\n__________LISTAR PRESTAMOS__________\n -MENSAJE: No hay prestamos registrados");
+    }
+}
     
     
     
     public static void main(String[] args) {
+        createClient();
         createBook();
-        updateBook();
-        readBook();
-        deleteBook();
-        readBook();
+        createLoan();
+        readLoan();
+        createLoan();
+        readLoan();
         
                 
         
