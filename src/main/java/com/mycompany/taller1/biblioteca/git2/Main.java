@@ -356,9 +356,44 @@ public class Main {
         System.out.println("\n__________BUSCAR PRESTAMO__________\n -MENSAJE: No hay prestamos registrados en el sistema");
     }
 }
-    
-    
-    
+
+    public static void deleteLoan() {
+
+        String loanId;
+
+        System.out.print("\n\n__________ELIMINAR PRESTAMO__________\n -Ingrese a continuacion el ID del prestamo a eliminar: ");
+        sc.nextLine();
+        loanId = sc.nextLine();
+
+        Loan loan = searchLoan(loanId);
+
+        if (loan != null) {
+            String option;
+
+            System.out.println("\n-Prestamo registrado, esta seguro que quiere continuar con la operacion?: ");
+            System.out.println("1-Si");
+            System.out.println("2-No");
+            System.out.print("*");
+            option = sc.nextLine();
+
+            switch (option) {
+                case "1":
+                    loans.remove(loan);
+                    System.out.println("\nMENSAJE: Prestamo eliminado exitosamente");
+                    break;
+                case "2":
+                    System.out.println("\nMENSAJE: Operacion cancelada");
+                    break;
+                default:
+                    System.out.println("\nMENSAJE: Se ingreso una opcion invalida");
+                    break;
+            }
+        } else {
+            System.out.println("\nMENSAJE: El prestamo ingresado no se encuentra registrado");
+        }
+    }
+
+
     
     public static void main(String[] args) {
         createClient();
