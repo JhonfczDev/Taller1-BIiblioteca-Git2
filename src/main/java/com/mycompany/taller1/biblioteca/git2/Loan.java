@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class Loan {
     private String loanId; 
     private Client client;
-    private Book book;
+    Book book;
     private LocalDate Date;
     private String status;
 
