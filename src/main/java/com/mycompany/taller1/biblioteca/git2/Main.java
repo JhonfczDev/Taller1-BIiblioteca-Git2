@@ -209,7 +209,6 @@ public class Main {
                     book.setAuthor(auth)
                             .setAvailable(avail)
                             .setCode(cod)
-                            .setCode(cod)
                             .setTitle(titl)
                             .setPublicationYear(year);
                     
@@ -329,40 +328,59 @@ public class Main {
     return null;
 }
     
-    public static void updateLoan(String targetLoanId) {
-    boolean found = false;
+    public static void updateLoan() {
 
-    if (!loans.isEmpty()) {
-        for (Loan loan : loans) {
-            if (loan.getLoanId().equalsIgnoreCase(targetLoanId)) {
-                System.out.println("\n__________BUSCAR PRESTAMO__________\n -A continuacion se detallan los datos del prestamo: ");
-                
-                System.out.println("\n-ID PRESTAMO: " + loan.getLoanId());
-                System.out.println("-CLIENTE: " + loan.getClient().getName()); 
-                System.out.println("-LIBRO: " + loan.getBook().getTitle());    
-                System.out.println("-FECHA: " + loan.getDate());
-                System.out.println("-ESTADO: " + loan.getClient());
-                
-                found = true;
-                break; 
+        String loanId;
+
+        System.out.print("\n\n__________MODIFICAR PRESTAMO__________\n -Ingrese a continuacion el id del prestamo a modificar: ");
+        loanId = sc.nextLine();
+
+        Loan loan = searchLoan(loanId);
+
+        if (loan != null) {
+
+            String idClient, codeBook, date, stado;
+
+            System.out.println("\n-Prestamo registrado a continuacion ingrese los datos: ");
+
+            System.out.print("-ID Cliente: ");
+            idClient = sc.nextLine();
+            System.out.print("-Codigo Libro: ");
+            codeBook = sc.nextLine();
+            System.out.print("-Fecha (YYYY-MM-DD): ");
+            date = sc.nextLine();
+
+            Client client = searchClient(idClient);
+            Book book = searchBook(codeBook);
+
+            if (client != null && book != null) {
+                LocalDate realDate = LocalDate.parse(date);
+
+                loan.setLoanId(loanId);
+                loan.setClient(client);
+                loan.setBook(book);
+                loan.setDate(realDate);
+                 
+                System.out.println("\nMENSAJE: Prestamo modificado exitosamente");
+            } else if (client == null && book == null) {
+                System.out.println("\nMENSAJE: No se encuentra registrado ni el cliente ni el libro ingresados");
+            } else if (client == null) {
+                System.out.println("\nMENSAJE: El cliente ingresado no se encuentra registrado");
+            } else {
+                System.out.println("\nMENSAJE: El libro ingresado no se encuentra registrado");
             }
+
+        } else {
+            System.out.println("\nMENSAJE: El prestamo ingresado no se encuentra registrado");
         }
 
-        if (!found) {
-            System.out.println("\n__________BUSCAR PRESTAMO__________\n -MENSAJE: No se encontro ningun prestamo con el ID: " + targetLoanId);
-        }
-
-    } else {
-        System.out.println("\n__________BUSCAR PRESTAMO__________\n -MENSAJE: No hay prestamos registrados en el sistema");
     }
-}
-
+    
     public static void deleteLoan() {
 
         String loanId;
 
-        System.out.print("\n\n__________ELIMINAR PRESTAMO__________\n -Ingrese a continuacion el ID del prestamo a eliminar: ");
-        sc.nextLine();
+        System.out.print("\n\n__________DEVOLVER PRESTAMO__________\n -Ingrese a continuacion el ID del prestamo a devolver: ");
         loanId = sc.nextLine();
 
         Loan loan = searchLoan(loanId);
@@ -379,7 +397,8 @@ public class Main {
             switch (option) {
                 case "1":
                     loans.remove(loan);
-                    System.out.println("\nMENSAJE: Prestamo eliminado exitosamente");
+                    loan.book.setAvailable(true);
+                    System.out.println("\nMENSAJE: Prestamo devuelto exitosamente");
                     break;
                 case "2":
                     System.out.println("\nMENSAJE: Operacion cancelada");
@@ -396,14 +415,124 @@ public class Main {
 
     
     public static void main(String[] args) {
-        createClient();
-        createBook();
-        createLoan();
-        readLoan();
-        createLoan();
-        readLoan();
         
+        boolean run = true;
+        
+        while(run == true){
+            String opt = "";
+            
+            System.out.println("\n\n__________MENU PRINCIPAL__________");
+            System.out.println("-Ingrese una opcion: ");
+            System.out.println("\n1. Gestionar Clientes"
+                    + "\n2. Gestionar Libros"
+                    + "\n3. Gestionar Prestamos"
+                    + "\n4. Salir"); opt = sc.nextLine();
+            
+            
+            switch(opt){
+                case "1":
+                    String opClient = "";
+                    
+                    System.out.println("__________GESTIONAR CLIENTES__________");
+                    System.out.println("-. Ingrese una opcion: "
+                            + "\n1. Agregar Clientes"
+                            + "\n2. Listar Clientes"
+                            + "\n3. Modificar Clientes"
+                            + "\n4. Eliminar Clientes"); opClient = sc.nextLine();
+                    
+                    switch(opClient){
+                        case "1":
+                            createClient();
+                            break;
+                        case "2":
+                            readClient();
+                            break;
+                        case "3":
+                            updateClient();
+                            break;
+                        case "4":
+                            deleteClient();
+                            break;
+                        default:
+                            System.out.println("MENSAJE: Opcion invalida");
+                            break;
+                    }
+                    
+                    break;
                 
-        
+                case "2":
+                    
+                    String opBook = "";
+
+                    System.out.println("__________GESTIONAR LIBROS__________");
+                    System.out.println("-. Ingrese una opcion: "
+                            + "\n1. Agregar Libro"
+                            + "\n2. Listar Libros"
+                            + "\n3. Modificar Libro"
+                            + "\n4. Eliminar Libro");
+                    opBook = sc.nextLine();
+
+                    switch (opBook) {
+                        case "1":
+                            createBook();
+                            break;
+                        case "2":
+                            readBook();
+                            break;
+                        case "3":
+                            updateBook();
+                            break;
+                        case "4":
+                            deleteBook();
+                            break;
+                        default:
+                            System.out.println("MENSAJE: Opcion invalida");
+                            break;
+                    }
+
+                    break;
+
+                case "3":
+                    String opLoan = "";
+
+                    System.out.println("__________GESTIONAR PRESTAMOS__________");
+                    System.out.println("-. Ingrese una opcion: "
+                            + "\n1. Registrar Prestamo"
+                            + "\n2. Listar Prestamos"
+                            + "\n3. Modificar Prestamo"
+                            + "\n4. Devolver Prestamo");
+                    opLoan = sc.nextLine();
+
+                    switch (opLoan) {
+                        case "1":
+                            createLoan();
+                            break;
+                        case "2":
+                            readLoan();
+                            break;
+                        case "3":
+                            updateLoan();
+                            break;
+                        case "4":
+                            deleteLoan();
+                            break;
+                        default:
+                            System.out.println("MENSAJE: Opcion invalida");
+                            break;
+                    }
+
+                    break;
+                    
+                case "4":
+                    run = false;
+                    System.out.println("MENSAJE: Sesion finalizada con exito");
+                    break;
+                
+                default:
+                    System.out.println("Opcion invalida");
+            }
+        }
+
+
     }
 }
