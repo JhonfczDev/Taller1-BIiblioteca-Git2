@@ -1,5 +1,6 @@
 package com.mycompany.taller1.biblioteca.git2;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -7,6 +8,7 @@ public class Main {
     
     static ArrayList<Client> clients = new ArrayList<>();
     static ArrayList<Book> books = new ArrayList<>();
+    static ArrayList<Loan> loans = new ArrayList<>();
     static Scanner sc = new Scanner(System.in);
     
     public static void createClient(){
@@ -140,9 +142,8 @@ public class Main {
         System.out.print("-Titulo: "); titl = sc.nextLine();
         System.out.print("-Ano de publicacion: "); year = sc.nextLine();
         System.out.print("-Autor: "); auth = sc.nextLine();
-        System.out.print("-Disponible: "); avail = Boolean.parseBoolean(sc.nextLine());
         
-        
+        avail = true;
         
         Book book = new Book(cod, titl, year, auth, avail);
         
@@ -235,7 +236,7 @@ public class Main {
                     System.out.println("\n-Libro registrado, esta seguro que quiere continuar con la operacion?: ");
                     System.out.println("1-Si");
                     System.out.println("2-No");
-                    System.out.println("*"); option = sc.nextLine();
+                    System.out.print("*"); option = sc.nextLine();
                     
                     switch(option){
                         case "1":
@@ -252,18 +253,155 @@ public class Main {
         }
     }
     
+    public static void createLoan(){
+        
+        String loanId;
+        String idClient;
+        String codeBook;
+        String date;
+        boolean existsClient = false;
+        boolean existsBook = false;
+        
+        System.out.println("\n__________REALIZAR PRESTAMO__________\n -Ingrese a continuacion los datos del prestamo a realizar: \n" );
+        
+        System.out.print("-ID PRESTAMO: "); loanId = sc.nextLine();
+        System.out.print("-ID CLIENTE: "); idClient = sc.nextLine();
+        System.out.print("-CODIGO LIBRO: "); codeBook = sc.nextLine();
+        System.out.print("-FECHA (yyyy-mm-dd): "); date = sc.nextLine();
+        
+        
+        Client client = searchClient(idClient);
+        Book book = searchBook(codeBook);
+        
+        if(client != null){
+            existsClient = true;
+        }
+        if(book != null){
+            existsBook = true;
+        }
+        
+        if(existsClient == false && existsBook == false){
+            System.out.println("\nMENSAJE: No se encuentra registrado ni el usuario, ni el libro");
+        }else if(existsClient == false){
+            System.out.println("\nMENSAJE: No se encuentra registrado el cliente ingresado");
+        }else if(existsBook == false){
+            System.out.println("\nMENSAJE: El libro ingresado no se encuentra registrado");
+        }else if(book.isAvailable() == false){
+            System.out.println("\nMENSAJE: El libro ingresado no se encuentra disponible");
+        }else{
+            String status = "PRESTADO";
+            LocalDate realDate = LocalDate.parse(date);
+            book.setAvailable(false);
+            Loan loan = new Loan(loanId, client, book, realDate, status);
+            loans.add(loan);
+            
+            System.out.println("\nMENSAJE: Prestamo registrado con exito");
+        }
+    }
     
+    public static void readLoan() {
+    if (!loans.isEmpty()) {
+        int ind = 1;
+        System.out.println("\n__________LISTAR PRESTAMOS__________\n -A continuacion se listan los prestamos registrados: ");
+
+        for (Loan loan : loans) {
+            System.out.println("\nPrestamo " + ind + ":\n");
+            System.out.println("-ID PRESTAMO: " + loan.getLoanId());
+            System.out.println("-CLIENTE: " + loan.getClient().getName() + " (ID: " + loan.getClient().getId() + ")");
+            System.out.println("-LIBRO: " + loan.getBook().getTitle() + " (COD: " + loan.getBook().getCode() + ")");
+            System.out.println("-FECHA: " + loan.getDate());
+            System.out.println("-ESTADO: " + loan.getStado()); // Ajusta a .getStatus() si cambiaste el nombre en la clase
+            
+            ind++;
+        }
+
+    } else {
+        System.out.println("\n__________LISTAR PRESTAMOS__________\n -MENSAJE: No hay prestamos registrados");
+    }
+}
     
-   
+    public static Loan searchLoan(String loanId) {
+    for (Loan loan : loans) {
+        if (loanId.equals(loan.getLoanId())) {
+            return loan;
+        }
+    }
+    return null;
+}
     
-    
+    public static void updateLoan(String targetLoanId) {
+    boolean found = false;
+
+    if (!loans.isEmpty()) {
+        for (Loan loan : loans) {
+            if (loan.getLoanId().equalsIgnoreCase(targetLoanId)) {
+                System.out.println("\n__________BUSCAR PRESTAMO__________\n -A continuacion se detallan los datos del prestamo: ");
+                
+                System.out.println("\n-ID PRESTAMO: " + loan.getLoanId());
+                System.out.println("-CLIENTE: " + loan.getClient().getName()); 
+                System.out.println("-LIBRO: " + loan.getBook().getTitle());    
+                System.out.println("-FECHA: " + loan.getDate());
+                System.out.println("-ESTADO: " + loan.getClient());
+                
+                found = true;
+                break; 
+            }
+        }
+
+        if (!found) {
+            System.out.println("\n__________BUSCAR PRESTAMO__________\n -MENSAJE: No se encontro ningun prestamo con el ID: " + targetLoanId);
+        }
+
+    } else {
+        System.out.println("\n__________BUSCAR PRESTAMO__________\n -MENSAJE: No hay prestamos registrados en el sistema");
+    }
+}
+
+    public static void deleteLoan() {
+
+        String loanId;
+
+        System.out.print("\n\n__________ELIMINAR PRESTAMO__________\n -Ingrese a continuacion el ID del prestamo a eliminar: ");
+        sc.nextLine();
+        loanId = sc.nextLine();
+
+        Loan loan = searchLoan(loanId);
+
+        if (loan != null) {
+            String option;
+
+            System.out.println("\n-Prestamo registrado, esta seguro que quiere continuar con la operacion?: ");
+            System.out.println("1-Si");
+            System.out.println("2-No");
+            System.out.print("*");
+            option = sc.nextLine();
+
+            switch (option) {
+                case "1":
+                    loans.remove(loan);
+                    System.out.println("\nMENSAJE: Prestamo eliminado exitosamente");
+                    break;
+                case "2":
+                    System.out.println("\nMENSAJE: Operacion cancelada");
+                    break;
+                default:
+                    System.out.println("\nMENSAJE: Se ingreso una opcion invalida");
+                    break;
+            }
+        } else {
+            System.out.println("\nMENSAJE: El prestamo ingresado no se encuentra registrado");
+        }
+    }
+
+
     
     public static void main(String[] args) {
+        createClient();
         createBook();
-        updateBook();
-        readBook();
-        deleteBook();
-        readBook();
+        createLoan();
+        readLoan();
+        createLoan();
+        readLoan();
         
                 
         
