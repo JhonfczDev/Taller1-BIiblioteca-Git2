@@ -1,5 +1,6 @@
 package com.mycompany.taller1.biblioteca.git2;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -7,6 +8,7 @@ public class Main {
     
     static ArrayList<Client> clients = new ArrayList<>();
     static ArrayList<Book> books = new ArrayList<>();
+    static ArrayList<Loan> loans = new ArrayList<>();
     static Scanner sc = new Scanner(System.in);
     
     public static void createClient(){
@@ -252,7 +254,49 @@ public class Main {
         }
     }
     
-    
+    public static void createLoan(){
+        
+        String loanId;
+        String idClient;
+        String codeBook;
+        String date;
+        boolean existsClient = false;
+        boolean existsBook = false;
+        
+        System.out.println("\n__________REALIZAR PRESTAMO__________\n -Ingrese a continuacion los datos del prestamo a realizar: \n" );
+        
+        System.out.print("-ID PRESTAMO: "); loanId = sc.nextLine();
+        System.out.print("-ID CLIENTE: "); idClient = sc.nextLine();
+        System.out.print("-CODIGO LIBRO: "); codeBook = sc.nextLine();
+        System.out.print("-FECHA (yyyy-mm-dd): "); date = sc.nextLine();
+        
+        
+        Client client = searchClient(idClient);
+        Book book = searchBook(codeBook);
+        
+        if(client != null){
+            existsClient = true;
+        }
+        if(book != null){
+            existsBook = true;
+        }
+        
+        if(existsClient == false && existsBook == false){
+            System.out.println("\nMENSAJE: No se encuentra registrado ni el usuario, ni el libro");
+        }else if(existsClient == false){
+            System.out.println("\nMENSAJE: No se encuentra registrado el cliente ingresado");
+        }else if(existsBook == false){
+            System.out.println("\nMENSAJE: El libro ingresado no se encuentra registrado");
+        }else{
+            String status = "PRESTADO";
+            LocalDate realDate = LocalDate.parse(date);
+            
+            Loan loan = new Loan(loanId, client, book, realDate, status);
+            loans.add(loan);
+            
+            System.out.println("\nMENSAJE: Prestamo registrado con exito");
+        }
+    }
     
    
     

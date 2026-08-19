@@ -3,25 +3,25 @@ package com.mycompany.taller1.biblioteca.git2;
 import java.time.LocalDate;
 
 public class Loan {
-    private String LoanId; 
-    Client client;
-    Book book;
-    LocalDate Date;
-    String Stado;
+    private String loanId; 
+    private Client client;
+    private Book book;
+    private LocalDate Date;
+    private String status;
 
     public Loan() {
     }
 
     public Loan(String LoanId, Client client, Book book, LocalDate Date, String Stado) {
-        this.LoanId = LoanId;
+        this.loanId = LoanId;
         this.client = client;
         this.book = book;
         this.Date = Date;
-        this.Stado = Stado;
+        this.status = Stado;
     }
 
     public String getLoanId() {
-        return LoanId;
+        return loanId;
     }
 
     public Client getClient() {
@@ -37,11 +37,11 @@ public class Loan {
     }
 
     public String getStado() {
-        return Stado;
+        return status;
     }
 
     public void setLoanId(String LoanId) {
-        this.LoanId = LoanId;
+        this.loanId = LoanId;
     }
 
     public void setClient(Client client) {
@@ -57,7 +57,7 @@ public class Loan {
     }
 
     public void setStado(String Stado) {
-        this.Stado = Stado;
+        this.status = Stado;
     }
     
      
