@@ -320,6 +320,17 @@ public class Main {
     }
 }
     
+    public static Loan searchLoan(String loanId) {
+    for (Loan loan : loans) {
+        if (loanId.equals(loan.getLoanId())) {
+            return loan;
+        }
+    }
+    return null;
+}
+    
+    
+    
     
     
     public static void main(String[] args) {
